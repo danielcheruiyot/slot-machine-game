@@ -65,16 +65,39 @@ const spin = () => {
     const symbols = [];
 
     for (const [symbol, count] of Object.entries(SYMBOLS_COUNT)) {
-        for (Let i = 0, i < count, i++) {
-            symbols.push(symbol)
+        for (let i = 0; i < count; i++) {
+            symbols.push(symbol); 
         }
-
-        console.log(symbol)
     }
+    
+    const reels = [[]]
+    /**Create a for loop to slect symbols in column form**/
+    for (let i = 0; i < COLS; i++) {
+        reels.push([]);
+        const reelSymbols = [...symbols];
+        /**Create a for loop to slect symbols in rows form**/
+        for (let j = 0; j < ROWS; j++) {
+            const randomIndex = Math.floor(Math.random() * reelSymbols.length);
+            const selectedSymbol = reelSymbols[randomIndex];
+            reels[i].push(selectedSymbol);
+            reelSymbols.splice(randomIndex, 1);
+        }
+    }
+
+    return reels;
 };
 
+const transpose = (reels) => {
+    const rows = [];
 
+    for (let i = 0; i < ROWS; i++) {
+        rows.push([]);
+        for (let j = 0; j < COLS; j++) {
+            rows[i]        }
+    }
+}
 
 let balance = deposit();
 const numberOfLines = getNumberOfLines();
 const betAmount = getBet(balance, numberOfLines);
+const reels = spin();
