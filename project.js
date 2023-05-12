@@ -93,11 +93,56 @@ const transpose = (reels) => {
     for (let i = 0; i < ROWS; i++) {
         rows.push([]);
         for (let j = 0; j < COLS; j++) {
-            rows[i]        }
+            rows[i].push(reels[j][i])        
+        }
     }
+
+    return rows;
+}
+
+const printRows = (rows) => {
+    for (const row of rows) {
+        let rowString = '';
+        for (const [i, symbol] of row.entries()) {
+            rowString += symbol;
+            if (i != row.length -1) {
+                rowString += ' | ';
+            }
+        }
+        console.log(rowString);
+    }
+}
+
+
+/*Check if the user has won*/
+const getWinnings = (rows, betAmount, lines ) => {
+    let winnings = 0;
+
+    for (let row = 0; row < lines; row++) {
+        const symbols = rows[row];
+        let allSame = true;
+
+        for (const symbol of symbols) {
+            if (symbol != symbols[0]) {
+                allSame = false;
+                break
+            }
+        }
+
+        if (allSame) {
+            winnings += bet * SYMBOL_VALUES[symbols[0]];
+        }
+    }
+
+    return winnings;
 }
 
 let balance = deposit();
 const numberOfLines = getNumberOfLines();
 const betAmount = getBet(balance, numberOfLines);
 const reels = spin();
+const rows = transpose(reels);
+printRows(rows);
+const winnings = getWinnings(rows, betAmount, numberOfLines);
+console.log("you just won Kshs."+winnings.toString())
+
